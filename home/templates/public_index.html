@@ -14,12 +14,12 @@
     <div class="container">
         <!-- row -->
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
 
 
                 <div class="billing-details">
-                    <div class="section-title">
-                        <h3 class="title">Welcome, {{ user.first_name}} {{ user.last_name}}
+                    <div class="section-title d-flex justify-content-center">
+                        <h3 class="title">Welcome {{ user.first_name}} {{ user.last_name}}
                         </h3>
                     </div>
                 </div>
@@ -44,13 +44,17 @@
                     };
                 </script> -->
 
-
-                What chat room would you like to enter?<br>
+                <div class="pb-3">
+                What chat room would you like to enter?     
+                </div>
                 <input id="room-name-input" type="text" size="100">
                 <br>
                 <br>
                 <input id="room-name-submit" type="button" value="Enter">
             
+         
+
+
                 <script>
                     document.querySelector('#room-name-input').focus();
                     document.querySelector('#room-name-input').onkeyup = function(e) {
