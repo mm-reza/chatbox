@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .team-chat {
+            display: flex;
+            height: 100vh;
+        }
+
+        .team-sidebar {
+            width: 300px;
+            background-color: #2C3E50;
+            color: #fff;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-members {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .team-member {
+            margin-bottom: 10px;
+        }
+
+        .team-member a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .team-member a:hover {
+            text-decoration: underline;
+        }
+
+        .chat-area {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+
+        .sent {
+            background-color: #3498DB;
+            color: #fff;
+            align-self: flex-end;
+        }
+
+        .received {
+            background-color: #fff;
+            color: #333;
+            align-self: flex-start;
+        }
+
+        .input-box {
+            display: flex;
+            background-color: #fff;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .input-box input {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            outline: none;
+            border-radius: 5px 0 0 5px;
+        }
+
+        .input-box button {
+            padding: 8px;
+            border: none;
+            background-color: #3498DB;
+            color: #fff;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="team-chat">
+    <div class="team-sidebar">
+        <h2>Team Members</h2>
+        <ul class="team-members">
+            <li class="team-member"><a href="#">Team Member 1</a></li>
+            <li class="team-member"><a href="#">Team Member 2</a></li>
+            <!-- Add more team members -->
+        </ul>
+    </div>
+
+    <div class="chat-area" id="chatArea">
+        <!-- Chat messages go here -->
+        <div class="message sent">Hello, Team!</div>
+        <div class="message received">Hi there!</div>
+        <!-- Add more messages -->
+
+            <div class="input-box">
+        <input type="text" class="form-control" placeholder="Type your message...">
+        <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+    </div>
+    </div>
+
+
+</div>
+
+<script>
+    function sendMessage() {
+        var messageInput = document.querySelector('.input-box input');
+        var messageText = messageInput.value.trim();
+
+        if (messageText !== '') {
+            var chatArea = document.getElementById('chatArea');
+            var messageDiv = document.createElement('div');
+            messageDiv.className = 'message sent';
+            messageDiv.textContent = messageText;
+            chatArea.appendChild(messageDiv);
+
+            // Clear the input field after sending the message
+            messageInput.value = '';
+
+            // Scroll to the bottom of the chat area to show the latest message
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+    }
+</script>
+
+</body>
+</html>

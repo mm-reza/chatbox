@@ -1,0 +1,72 @@
+{% extends 'homebase.html' %}
+
+{% block title %} {{user.first.name}} Profile {% endblock %}
+{block keywords}This is home keywords{endblock}
+{block description}This is home description{endblock}
+
+
+
+{% block body %}
+
+<!-- section -->
+<div class="section" style="padding-top: 15vh;">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+
+
+                <div class="billing-details">
+                    <div class="section-title">
+                        <h3 class="title">Welcome, {{ user.first_name}} {{ user.last_name}}
+                        </h3>
+                    </div>
+                </div>
+                <hr>
+
+
+                <!-- Click to join livechat<br>
+                <input id="room-name-input" type="text" size="100" hidden><br>
+                <input id="room-name-submit" type="button" value="Enter">
+
+                <script>
+                    document.querySelector('#room-name-input').focus();
+                    document.querySelector('#room-name-input').onkeyup = function (e) {
+                        if (e.keyCode === 13) {  // enter, return
+                            document.querySelector('#room-name-submit').click();
+                        }
+                    };
+                    document.querySelector('#room-name-submit').onclick = function (e) {
+                        //var roomName = document.querySelector('#room-name-input').value;
+                        var roomName = '{{user}}';
+                        window.location.pathname = '/user/chat/' + roomName + '/';
+                    };
+                </script> -->
+
+
+                What chat room would you like to enter?<br>
+                <input id="room-name-input" type="text" size="100">
+                <br>
+                <br>
+                <input id="room-name-submit" type="button" value="Enter">
+            
+                <script>
+                    document.querySelector('#room-name-input').focus();
+                    document.querySelector('#room-name-input').onkeyup = function(e) {
+                        if (e.key === 'Enter') {  // enter, return
+                            document.querySelector('#room-name-submit').click();
+                        }
+                    };
+            
+                    document.querySelector('#room-name-submit').onclick = function(e) {
+                        var roomName = document.querySelector('#room-name-input').value;
+                        window.location.pathname = 'pchat/' + roomName + '/';
+                    };
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
