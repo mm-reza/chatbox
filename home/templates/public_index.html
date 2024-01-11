@@ -64,7 +64,7 @@
                     };
             
                     document.querySelector('#room-name-submit').onclick = function(e) {
-                        var roomName = document.querySelector('#room-name-input').value;
+                        var roomName = document.querySelector('#room-name-input').value.replace(/[^a-zA-Z0-9]/g, '');
                         window.location.pathname = 'pchat/' + roomName + '/';
                     };
                 </script>
