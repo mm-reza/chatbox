@@ -106,22 +106,24 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
 
 
-def update_or_create_key(dictionary, key, new_element):
+def update_or_create_key(dictionary, room, user, chat):
     # Check if the key exists in the dictionary
-    if key in dictionary:
+    if room in dictionary:
         # Update the list associated with the existing key, avoiding duplicates
-        if new_element not in dictionary[key]:
-            dictionary[key].append(new_element)
+        users, chat_existing = dictionary[room]
+        if user not in users:
+            users.append(user)
+        dictionary[room] = [users, chat]
     else:
         # Create a new key with a list
-        dictionary[key] = [new_element]
+        dictionary[room] = [[user], chat]
 
-def remove_element_from_key(dictionary, key, element_to_remove):
+def remove_element_from_key(dictionary, room, user):
     # Check if the key exists in the dictionary
-    if key in dictionary:
+    if room in dictionary:
         # Remove the element from the list associated with the existing key
-        if element_to_remove in dictionary[key]:
-            dictionary[key].remove(element_to_remove)
+        if user in dictionary[room][0]:
+            dictionary[room][0].remove(user)
 
 
 user_list = {}
@@ -154,6 +156,7 @@ class ChatConsumers(WebsocketConsumer):
         # Access stored information
         message = getattr(self, 'stored_message', None)
         username = getattr(self, 'stored_username', None)
+        chat = getattr(self, 'stored_chat', None)
         try:
             remove_element_from_key(user_list, self.room_name, username)
         except:
@@ -169,6 +172,7 @@ class ChatConsumers(WebsocketConsumer):
                 "message": 'closed',
                 # "username": self.scope["user"].username.title(),
                 "username": username,
+                "chat": chat,
             },
         )
         
@@ -182,16 +186,19 @@ class ChatConsumers(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
         username = text_data_json["username"]
+        chat = text_data_json["chat"]
+        # chat = getattr(self, 'stored_chat', None)
 
-        update_or_create_key(user_list, self.room_name, username)
+        update_or_create_key(user_list, self.room_name, username, chat)
         # user_list.append(username)
-        print(message, username)
+        print(message, username, chat)
 
         # Store relevant information in the consumer instance
         # self.stored_message = text_data_json.get('message')
         # self.stored_username = text_data_json.get('username')
         self.stored_message = message
         self.stored_username = username
+        self.stored_chat = chat
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
@@ -201,6 +208,7 @@ class ChatConsumers(WebsocketConsumer):
                 "message": message,
                 # "username": self.scope["user"].username.title(),
                 "username": username,
+                "chat": chat,
             },
         )
 
@@ -208,6 +216,7 @@ class ChatConsumers(WebsocketConsumer):
     def chat_message(self, event):
         message = event["message"]
         username = event["username"]
+        chat = event["chat"]
 
         # Send message to WebSocket
         self.send(
@@ -215,6 +224,7 @@ class ChatConsumers(WebsocketConsumer):
                 {
                     "message": message,
                     "username": username,
+                    "chat": chat,
                 }
             )
         )
