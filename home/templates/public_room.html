@@ -145,10 +145,13 @@
     <script>
         // const userListDiv = document.getElementById('chatbox');
         const userListDiv = document.getElementById('userlist');
+        const chatLogDiv = document.querySelector('#chat-log');
+        // console.log(chatLogDiv);
+
         // Function to check if a username is found in the div content
         function isUsernameFound(username) {
             // Get the content of the div
-            const divContent = userListDiv.textContent || userListDiv.innerText;
+            const divContent = (userListDiv.textContent || userListDiv.innerText).trim().toLowerCase();
             // Check if the username is found in the div content
             return divContent.includes(username);
         }
@@ -156,14 +159,92 @@
         var user = '{{user}}'
         let userName;
         function submitName() {
-            userName = document.getElementById('user-name-input').value;
-
+            userName = document.getElementById('user-name-input').value.replace(/[^a-zA-Z0-9]/g, '');
             // Add logic to handle the submission of the anonymous user's name
-            if (isUsernameFound(userName)) {
+            if (isUsernameFound(userName.trim().toLowerCase())) {
             alert(`'${userName}' is already joined !`);
             return false
             } else {
-                console.log(`Username '${userName}' is not found in the div.`);
+
+                if (chatLogDiv){
+                // var chatNameElements = chatLogDiv.querySelectorAll('.chat-name');
+                var chatNameElements = chatLogDiv.querySelectorAll('li');
+
+                // console.log(chatNameElements);
+                chatNameElements.forEach(function (chatNameElement) {
+                    // Check if the text content of the element contains 'xyz'
+                    const chatName = chatNameElement.textContent || userListDiv.innerText
+                    if (chatName.includes(userName)) {
+                        // Do something if 'xyz' is found in the text content
+                        console.log('Found "xyz" in:');
+                        chatNameElement.classList.remove('chat-left');
+                        chatNameElement.classList.add('chat-right');
+
+                    }else{
+                        chatNameElement.classList.remove('chat-right');
+                        chatNameElement.classList.add('chat-left');
+                    }
+
+
+
+
+
+
+                });                    
+                }else {
+                    console.log('chat-log div not found');
+                }
+
+
+                var chatLeftContainers = document.querySelectorAll('.chat-left');
+                var chatRightContainers = document.querySelectorAll('.chat-right');
+
+                chatLeftContainers.forEach(function (chatLeftContainer) {
+
+                    var aElements = chatLeftContainer.querySelectorAll('.chat-avatar');
+                    var bElements = chatLeftContainer.querySelectorAll('.chat-text');
+                    var cElements = chatLeftContainer.querySelectorAll('.chat-hour');
+
+                    // Clear the existing content in 'chat-left' container
+                    chatLeftContainer.innerHTML = '';
+
+                    // Append the child elements in the desired order
+                        aElements.forEach(function (element) {
+                            chatLeftContainer.appendChild(element);
+                        });
+                        bElements.forEach(function (element) {
+                            chatLeftContainer.appendChild(element);
+                        });
+                        cElements.forEach(function (element) {
+                            chatLeftContainer.appendChild(element);
+                        });
+
+                });
+                chatRightContainers.forEach(function (chatLeftContainer) {
+
+                    var aElements = chatLeftContainer.querySelectorAll('.chat-avatar');
+                    var bElements = chatLeftContainer.querySelectorAll('.chat-text');
+                    var cElements = chatLeftContainer.querySelectorAll('.chat-hour');
+
+                    // Clear the existing content in 'chat-left' container
+                    chatLeftContainer.innerHTML = '';
+
+                        // Append the child elements in the desired order
+                        cElements.forEach(function (element) {
+                            chatLeftContainer.appendChild(element);
+                        });
+
+                        bElements.forEach(function (element) {
+                            chatLeftContainer.appendChild(element);
+                        });
+                        aElements.forEach(function (element) {
+                            chatLeftContainer.appendChild(element);
+                        });
+
+                });
+
+                console.log(`Username '${userName}' is ok.`);
+                localStorage.setItem('userName', userName);
             } 
             console.log('data.userlist[0]');
             msgInputContainer.style.display = 'block';
@@ -181,6 +262,19 @@
             return userName;
         }
         console.log(user);
+
+        // window.onload = function () {
+        //     // Retrieve the element from local storage
+        //     var savedElement = localStorage.getItem('userName');
+
+        //     // Check if the element exists in local storage
+        //     if (savedElement) {
+
+        //         console.log('Element retrieved from local storage:', savedElement);
+        //         submitName()
+        
+        //     } else {
+        //         console.log('No element found in local storage.'); }}
 
         // var today = new Date();
         // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -258,7 +352,7 @@
                 userlist.innerHTML += (msg);
                 document.getElementById('ofline').innerHTML = 'online'                    
                 }
-
+                // console.log('userlist length', userlist.length);   
                 if (data.userlist && data.userlist[roomName]){
                     var usernames = data.userlist[roomName][0];
 
@@ -288,11 +382,14 @@
                     userlist.innerHTML += htmlContent;
                 }
 
-            } else if  (data.message === 'closed'){
+            } else if  (data.message === 'closed' ){
 
-                var userdiv = document.getElementById(data.username)
-
-                userdiv.remove()
+                try
+                {var userdiv = document.getElementById(data.username)
+                userdiv.remove()}
+                catch{
+                    console.log('error: ', userdiv);
+                }
 
             }
             
