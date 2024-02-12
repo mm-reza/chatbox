@@ -293,38 +293,49 @@
     background: #ffffff;
     font-weight: 300; 
     line-height: 100%;
-    position: relative;
+    /* position: relative; */
 
-    word-wrap: break-word;
+    /* word-wrap: break-word; */
 
-	display: flex;
+	/* display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
 }
 
 .chat-container li .chat-text:before {
     content: '';
-    position: absolute;
+    /* position: relative; */
     width: 0;
     height: 0;
     /* top: 10px; */
-    left: -20px;
+    /* left: -20px; */
     /* border: 10px solid; */
     border-color: transparent #ffffff transparent transparent;
-    word-wrap: break-word;
+    /* word-wrap: break-word; */
 }
 
 .chat-container li.chat-right > .chat-text {
     text-align: right;
-    word-wrap: break-word;
+
 }
 
 .chat-container li.chat-right > .chat-text:before {
     right: -20px;
     border-color: transparent transparent transparent #ffffff;
-    left: inherit;
-    word-wrap: break-word;
+
 }
+
+.chat-container li.chat-right > .chat-text,
+.chat-container li.chat-right > .chat-text:before,
+.chat-container li.chat-left > .chat-text,
+.chat-container li.chat-left > .chat-text:before{
+
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 50%;
+
+}
+
 
 .chat-container li .chat-hour {
     padding: 0;
@@ -393,14 +404,14 @@
     .chat-container li.chat-right .chat-text {
         font-size: .8rem;
         max-width: 50%;
+
         /* justify-content: flex-end; */
-        word-wrap: break-word;
         
     }
     .chat-container li.chat-left .chat-text {
         font-size: .8rem;
         max-width: 50%;
-        word-wrap: break-word;
+        /* word-wrap: break-word; */
         /* box-sizing: border-box; */
         /* justify-content: flex-start; */
     }
