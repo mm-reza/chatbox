@@ -295,6 +295,8 @@
     line-height: 100%;
     position: relative;
 
+    word-wrap: break-word;
+
 	display: flex;
     align-items: center;
     justify-content: center;
@@ -309,16 +311,19 @@
     left: -20px;
     /* border: 10px solid; */
     border-color: transparent #ffffff transparent transparent;
+    word-wrap: break-word;
 }
 
 .chat-container li.chat-right > .chat-text {
     text-align: right;
+    word-wrap: break-word;
 }
 
 .chat-container li.chat-right > .chat-text:before {
     right: -20px;
     border-color: transparent transparent transparent #ffffff;
     left: inherit;
+    word-wrap: break-word;
 }
 
 .chat-container li .chat-hour {
@@ -390,11 +395,13 @@
         max-width: 50%;
         /* justify-content: flex-end; */
         word-wrap: break-word;
+        
     }
     .chat-container li.chat-left .chat-text {
         font-size: .8rem;
         max-width: 50%;
         word-wrap: break-word;
+        /* box-sizing: border-box; */
         /* justify-content: flex-start; */
     }
 }
