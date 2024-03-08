@@ -174,7 +174,8 @@
                 chatNameElements.forEach(function (chatNameElement) {
                     // Check if the text content of the element contains 'xyz'
                     const chatName = chatNameElement.textContent || userListDiv.innerText
-                    if (chatName.includes(userName)) {
+                   // if (chatName.includes(userName)) {
+		      if (chatName.indexOf(userName) !== -1) {
                         // Do something if 'xyz' is found in the text content
                         console.log('Found "xyz" in:');
                         chatNameElement.classList.remove('chat-left');
